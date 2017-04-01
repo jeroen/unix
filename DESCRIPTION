@@ -1,0 +1,13 @@
+Package: unix
+Title: Unix System Utilities
+Version: 0.1
+Author: Jeroen Ooms
+Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
+Description: Bindings to system utilities found in most Unix systems, 
+    mainly POSIX functions.
+License: MIT + file LICENSE
+URL: https://github.com/jeroen/unix
+BugReports: https://github.com/jeroen/unix/issues
+OS_type: unix
+SystemRequirements: POSIX.1-2001
+RoxygenNote: 6.0.1
