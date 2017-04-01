@@ -17,6 +17,8 @@
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getuid
+#' @examples # Current User:
+#' getuid()
 getuid <- function(){
   .Call(R_getuid)
 } 
@@ -24,6 +26,8 @@ getuid <- function(){
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getgid
+#' @examples # Current UserGroup:
+#' getgid()
 getgid <- function(){
   .Call(R_getgid)
 } 
@@ -31,6 +35,8 @@ getgid <- function(){
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getpid
+#' @examples # Process ID
+#' getpid()
 getpid <- function(){
   .Call(R_getpid)
 } 
@@ -38,6 +44,8 @@ getpid <- function(){
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getppid
+#' @examples # parent PID:
+#' getppid()
 getppid <- function(){
   .Call(R_getppid)
 } 
@@ -45,6 +53,12 @@ getppid <- function(){
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getpgid
+#' @examples # Process group id:
+#' getpgid()
+#' 
+#' # Detach process group
+#' setpgid(0)
+#' getpgid()
 getpgid <- function(){
   .Call(R_getpgid)
 } 
@@ -52,6 +66,8 @@ getpgid <- function(){
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getpriority
+#' @examples # Process priority:
+#' getprio()
 getprio <- function(){
   .Call(R_getpriority)
 } 
@@ -84,6 +100,8 @@ setpgid <- function(pgid = 0){
 #' @rdname process
 #' @useDynLib unix R_setpriority
 #' @param prio Priority level
+#' @examples # Decrease priority
+#' setprio(getprio() + 1)
 setprio <- function(prio){
   stopifnot(is.numeric(prio))
   .Call(R_setpriority, as.integer(prio))

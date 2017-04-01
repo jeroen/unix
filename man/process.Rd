@@ -66,3 +66,23 @@ Acronyms stand for:
 An unprivileged (non-root) process cannot change it's \code{uid} and only lower
 process priority (higher value).
 }
+\examples{
+# Current User:
+getuid()
+# Current UserGroup:
+getgid()
+# Process ID
+getpid()
+# parent PID:
+getppid()
+# Process group id:
+getpgid()
+
+# Detach process group
+setpgid(0)
+getpgid()
+# Process priority:
+getprio()
+# Decrease priority
+setprio(getprio() + 1)
+}
