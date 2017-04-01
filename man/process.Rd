@@ -6,9 +6,11 @@
 \alias{getpid}
 \alias{getppid}
 \alias{getpgid}
+\alias{getprio}
 \alias{setuid}
 \alias{setgid}
 \alias{setpgid}
+\alias{setprio}
 \alias{kill}
 \title{Process Info}
 \usage{
@@ -22,11 +24,15 @@ getppid()
 
 getpgid()
 
+getprio()
+
 setuid(uid)
 
 setgid(gid)
 
 setpgid(pgid = 0)
+
+setprio(prio)
 
 kill(pid, signal = SIGTERM)
 }
@@ -35,21 +41,28 @@ kill(pid, signal = SIGTERM)
 
 \item{gid}{Group ID from \code{/etc/group}.}
 
-\item{pgid}{Process Group ID. Usually must be the same as current group}
+\item{pgid}{Process Group ID. Default \code{0} sets pgid to the current pid.}
+
+\item{prio}{Priority level}
 
 \item{pid}{process ID (integer)}
 
 \item{signal}{a signal number (integer), defaults to \link[tools:SIGTERM]{tools::SIGTERM}.}
 }
 \description{
-Get or set attributes of the current process. Acronyms stand for:
+Get or set attributes of the current process.
 }
 \details{
+Acronyms stand for:
 \itemize{
 \item \code{pid} Process ID
 \item \code{ppid} Parent-Process ID
 \item \code{pgid} Process-Group ID
 \item \code{uid} User ID
 \item \code{gid} Group ID
+\item \code{prio} Priority level
 }
+
+An unprivileged (non-root) process cannot change it's \code{uid} and only lower
+process priority (higher value).
 }

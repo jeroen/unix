@@ -1,12 +1,18 @@
 #' Process Info
 #' 
-#' Get or set attributes of the current process. Acronyms stand for:
+#' Get or set attributes of the current process. 
+#' 
+#' Acronyms stand for:
 #' 
 #'  - `pid` Process ID
 #'  - `ppid` Parent-Process ID
 #'  - `pgid` Process-Group ID
 #'  - `uid` User ID
 #'  - `gid` Group ID
+#'  - `prio` Priority level
+#' 
+#' An unprivileged (non-root) process cannot change it's `uid` and only lower
+#' process priority (higher value).
 #' 
 #' @export
 #' @rdname process
@@ -43,6 +49,12 @@ getpgid <- function(){
   .Call(R_getpgid)
 } 
 
+#' @export
+#' @rdname process
+#' @useDynLib unix R_getpriority
+getprio <- function(){
+  .Call(R_getpriority)
+} 
 
 #' @export
 #' @rdname process
@@ -66,6 +78,15 @@ setgid <- function(gid){
 #' @param pgid Process Group ID. Default `0` sets pgid to the current pid.
 setpgid <- function(pgid = 0){
   .Call(R_setpgid, pgid)
+}
+
+#' @export
+#' @rdname process
+#' @useDynLib unix R_setpriority
+#' @param prio Priority level
+setprio <- function(prio){
+  stopifnot(is.numeric(prio))
+  .Call(R_setpriority, as.integer(prio))
 }
 
 #' @export
