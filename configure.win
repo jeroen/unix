@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "This package is UNIX only, which means it does not work on Windows."
+exit 1
