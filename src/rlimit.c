@@ -34,7 +34,22 @@ SEXP R_rlimit_core(SEXP a, SEXP b) {return R_rlimit(RLIMIT_CORE, a, b);}
 SEXP R_rlimit_cpu(SEXP a, SEXP b) {return R_rlimit(RLIMIT_CPU, a, b);}
 SEXP R_rlimit_data(SEXP a, SEXP b) {return R_rlimit(RLIMIT_DATA, a, b);}
 SEXP R_rlimit_fsize(SEXP a, SEXP b) {return R_rlimit(RLIMIT_FSIZE, a, b);}
-SEXP R_rlimit_memlock(SEXP a, SEXP b) {return R_rlimit(RLIMIT_MEMLOCK, a, b);}
 SEXP R_rlimit_nofile(SEXP a, SEXP b) {return R_rlimit(RLIMIT_NOFILE, a, b);}
-SEXP R_rlimit_nproc(SEXP a, SEXP b) {return R_rlimit(RLIMIT_NPROC, a, b);}
 SEXP R_rlimit_stack(SEXP a, SEXP b) {return R_rlimit(RLIMIT_STACK, a, b);}
+
+/* these are not available on Solaris 10 */
+SEXP R_rlimit_nproc(SEXP a, SEXP b) {
+#ifdef RLIMIT_NPROC
+  return R_rlimit(RLIMIT_NPROC, a, b);
+#else
+  Rf_error("RLIMIT_NPROC not available on this system");
+#endif
+}
+
+SEXP R_rlimit_memlock(SEXP a, SEXP b) {
+#ifdef RLIMIT_MEMLOCK
+  return R_rlimit(RLIMIT_MEMLOCK, a, b);
+#else
+  Rf_error("RLIMIT_MEMLOCK not available on this system");
+#endif
+}
