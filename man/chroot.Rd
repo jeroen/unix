@@ -4,7 +4,7 @@
 \alias{chroot}
 \title{Change Root Dir}
 \usage{
-chroot(path = "")
+chroot(path = getwd())
 }
 \arguments{
 \item{path}{directory of the new root}
@@ -19,4 +19,7 @@ This call changes an ingredient in the pathname resolution process
 and does nothing else.  In particular, it is not intended to be used
 for any kind of security purpose, neither to fully sandbox a process
 nor to restrict filesystem system calls.
+}
+\references{
+\href{http://man7.org/linux/man-pages/man2/chroot.2.html}{CHROOT(2)}
 }
