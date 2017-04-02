@@ -86,3 +86,9 @@ getprio()
 # Decrease priority
 setprio(getprio() + 1)
 }
+\references{
+\href{http://man7.org/linux/man-pages/man2/getuid.2.html}{GETUID(2)}
+\href{http://man7.org/linux/man-pages/man2/getpid.2.html}{GETPID(2)}
+\href{http://man7.org/linux/man-pages/man2/getpgid.2.html}{GETPGID(2)}
+\href{http://man7.org/linux/man-pages/man2/getpriority.2.html}{GETPRIORITY(2)}
+}
