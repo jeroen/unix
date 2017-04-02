@@ -1,10 +1,10 @@
 Package: unix
 Title: Unix System Utilities
-Version: 0.1
+Version: 1.0
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Description: Bindings to system utilities found in most Unix systems, 
-    mainly POSIX functions.
+    mainly POSIX functions which are not part of the Standard C Library.
 License: MIT + file LICENSE
 URL: https://github.com/jeroen/unix
 BugReports: https://github.com/jeroen/unix/issues
