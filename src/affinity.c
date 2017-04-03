@@ -4,7 +4,7 @@
 #include <Rinternals.h>
 
 // TODO: better feature test?
-#ifdef CPU_ZERO
+#if defined(__FreeBSD__) || defined(__linux__)
 #define HAS_AFFINITY
 #endif
 
