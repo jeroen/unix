@@ -1,6 +1,6 @@
 check_apparmor <- function(){
   getNamespace("RAppArmor")
-  if(!RAppArmor:::aa_is_compiled())
+  if(!RAppArmor::aa_is_compiled())
     stop("AppArmor is not available on your Linux distribution")
   
   # Try aa-getcon

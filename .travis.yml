@@ -1,5 +1,7 @@
 language: r
 cache: packages
+env:
+  - _R_CHECK_FORCE_SUGGESTS_=FALSE
 
 matrix:
   include:
@@ -22,6 +24,11 @@ matrix:
 
 r_github_packages:
   - jimhester/covr
+
+addons:
+  apt:
+    packages:
+    - libapparmor-dev
 
 warnings_are_errors: true
 #r_check_revdep: true
