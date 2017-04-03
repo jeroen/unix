@@ -151,8 +151,12 @@ static void serialize_to_pipe(SEXP object, int results[2]){
   R_Serialize(object, &stream);
 }
 
+//within the forked process, so not call parent console 
 void prepare_fork(const char * tmpdir){
 #ifndef R_BUILD_CLEAN
+  ptr_R_ResetConsole = NULL;
+  ptr_R_FlushConsole = NULL;
+  ptr_R_ReadConsole = NULL;
   ptr_R_WriteConsole = NULL;
   ptr_R_WriteConsoleEx = write_out_ex;
   R_isForkedChild = 1;
