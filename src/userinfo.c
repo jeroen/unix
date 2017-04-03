@@ -10,11 +10,7 @@
 
 #define make_string(x) x ? Rf_mkString(x) : Rf_ScalarString(NA_STRING)
 
-/* check for system errors */
-void bail_if(int err, const char * what){
-  if(err)
-    Rf_errorcall(R_NilValue, "System failure for: %s (%s)", what, strerror(errno));
-}
+extern void bail_if(int err, const char * what);
 
 SEXP R_user_info(SEXP input){
   errno = 0;

@@ -1,0 +1,5 @@
+#!/bin/sh
+PWD=`pwd`
+case "$PWD" in *"unix.Rcheck"*)
+echo "PKG_CFLAGS = -DR_BUILD_CLEAN" > src/Makevars
+esac
