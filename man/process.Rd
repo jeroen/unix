@@ -8,13 +8,13 @@
 \alias{getpid}
 \alias{getppid}
 \alias{getpgid}
-\alias{getprio}
+\alias{getpriority}
 \alias{setuid}
 \alias{seteuid}
 \alias{setgid}
 \alias{setegid}
 \alias{setpgid}
-\alias{setprio}
+\alias{setpriority}
 \alias{kill}
 \title{Process Info}
 \usage{
@@ -32,7 +32,7 @@ getppid()
 
 getpgid()
 
-getprio()
+getpriority()
 
 setuid(uid)
 
@@ -44,7 +44,7 @@ setegid(gid)
 
 setpgid(pgid = 0)
 
-setprio(prio)
+setpriority(prio)
 
 kill(pid, signal = SIGTERM)
 }
@@ -100,9 +100,9 @@ getpgid()
 setpgid(0)
 getpgid()
 # Process priority:
-getprio()
+getpriority()
 # Decrease priority
-setprio(getprio() + 1)
+setpriority(getpriority() + 1)
 }
 \references{
 \href{http://man7.org/linux/man-pages/man2/getuid.2.html}{GETUID(2)}

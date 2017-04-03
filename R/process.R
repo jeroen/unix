@@ -91,8 +91,8 @@ getpgid <- function(){
 #' @rdname process
 #' @useDynLib unix R_getpriority
 #' @examples # Process priority:
-#' getprio()
-getprio <- function(){
+#' getpriority()
+getpriority <- function(){
   .Call(R_getpriority)
 } 
 
@@ -139,8 +139,8 @@ setpgid <- function(pgid = 0){
 #' @useDynLib unix R_setpriority
 #' @param prio Priority level
 #' @examples # Decrease priority
-#' setprio(getprio() + 1)
-setprio <- function(prio){
+#' setpriority(getpriority() + 1)
+setpriority <- function(prio){
   stopifnot(is.numeric(prio))
   .Call(R_setpriority, as.integer(prio))
 }

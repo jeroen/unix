@@ -93,11 +93,12 @@ eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
 #' @param rlimits named list of [rlimit] values, for example: `list(cpu = 60, fsize = 1e6)`.
 #' @param uid evaluate as given user (uid or name). See [setuid()], only for root.
 #' @param gid evaluate as given group (gid or name). See [setgid()] only for root.
+#' @param priority process priority, see [setpriority()].
 #' @param profile AppArmor profile, see `RAppArmor::aa_change_profile()`. 
 #' Requires the `RAppArmor` package (Debian/Ubuntu only)
 eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(), 
                       std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
-                      gid = NULL, profile = NULL){
+                      gid = NULL, priority = NULL, profile = NULL){
   orig_expr <- substitute(expr)
   out <- eval_fork(expr = tryCatch({
     if(length(uid))
@@ -106,6 +107,8 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdo
       setgid(gid = gid)
     if(length(device))
       options(device = device)
+    if(length(priority))
+      setpriority(priority)
     if(length(rlimits))
       do.call(set_hard_limits, as.list(rlimits))
     if(length(profile)){

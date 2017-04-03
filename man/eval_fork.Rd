@@ -10,7 +10,7 @@ eval_fork(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 
 eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
   std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
-  gid = NULL, profile = NULL)
+  gid = NULL, priority = NULL, profile = NULL)
 }
 \arguments{
 \item{expr}{expression to evaluate}
@@ -32,6 +32,8 @@ eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 \item{uid}{evaluate as given user (uid or name). See \code{\link[=setuid]{setuid()}}, only for root.}
 
 \item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
+
+\item{priority}{process priority, see \code{\link[=setpriority]{setpriority()}}.}
 
 \item{profile}{AppArmor profile, see \code{RAppArmor::aa_change_profile()}.
 Requires the \code{RAppArmor} package (Debian/Ubuntu only)}
