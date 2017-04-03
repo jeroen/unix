@@ -8,7 +8,9 @@
 #'  - `ppid` Parent-Process ID
 #'  - `pgid` Process-Group ID
 #'  - `uid` User ID
+#'  - `euid` Effective User ID
 #'  - `gid` Group ID
+#'  - `egid` Effective Group ID
 #'  - `prio` Priority level
 #' 
 #' An unprivileged (non-root) process cannot change it's `uid` and only lower
@@ -35,6 +37,24 @@ getuid <- function(){
 getgid <- function(){
   .Call(R_getgid)
 } 
+
+#' @export
+#' @rdname process
+#' @useDynLib unix R_geteuid
+#' @examples # Current UserGroup:
+#' geteuid()
+geteuid <- function(){
+  .Call(R_geteuid)
+} 
+
+#' @export
+#' @rdname process
+#' @useDynLib unix R_getegid
+#' @examples # Current UserGroup:
+#' getegid()
+getegid <- function(){
+  .Call(R_getegid)
+}
 
 #' @export
 #' @rdname process
@@ -86,10 +106,24 @@ setuid <- function(uid){
 
 #' @export
 #' @rdname process
+#' @useDynLib unix R_seteuid
+seteuid <- function(uid){
+  .Call(R_seteuid, uid)
+}
+
+#' @export
+#' @rdname process
 #' @useDynLib unix R_setgid
 #' @param gid Group ID from `/etc/group`.
 setgid <- function(gid){
   .Call(R_setgid, gid)
+}
+
+#' @export
+#' @rdname process
+#' @useDynLib unix R_setegid
+setegid <- function(gid){
+  .Call(R_setegid, gid)
 }
 
 #' @export

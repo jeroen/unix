@@ -10,7 +10,7 @@ eval_fork(expr, envir = parent.frame(), tmp = tempfile("fork"),
 
 eval_safe(expr, envir = parent.frame(), tmp = tempfile("fork"),
   timeout = 60, std_out = stdout(), std_err = stderr(), device = pdf,
-  rlimits = list())
+  rlimits = list(), uid = NULL, gid = NULL)
 }
 \arguments{
 \item{expr}{expression to evaluate}
@@ -30,6 +30,10 @@ eval_safe(expr, envir = parent.frame(), tmp = tempfile("fork"),
 \item{device}{graphics device to use in the fork, see \code{\link[=dev.new]{dev.new()}}}
 
 \item{rlimits}{named list of \link{rlimit} values, for example: \code{list(cpu = 60, fsize = 1e6)}.}
+
+\item{uid}{evluate as given user. Passed to \code{\link[=seteuid]{seteuid()}} (can only be done by root)}
+
+\item{gid}{evluate as given group. Passed to \code{\link[=setegid]{setegid()}} (can only be done by root)}
 }
 \description{
 Version of \code{\link[=eval]{eval()}} which evaluates expression in a temporary fork so that it has no side

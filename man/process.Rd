@@ -3,12 +3,16 @@
 \name{getuid}
 \alias{getuid}
 \alias{getgid}
+\alias{geteuid}
+\alias{getegid}
 \alias{getpid}
 \alias{getppid}
 \alias{getpgid}
 \alias{getprio}
 \alias{setuid}
+\alias{seteuid}
 \alias{setgid}
+\alias{setegid}
 \alias{setpgid}
 \alias{setprio}
 \alias{kill}
@@ -17,6 +21,10 @@
 getuid()
 
 getgid()
+
+geteuid()
+
+getegid()
 
 getpid()
 
@@ -28,7 +36,11 @@ getprio()
 
 setuid(uid)
 
+seteuid(uid)
+
 setgid(gid)
+
+setegid(gid)
 
 setpgid(pgid = 0)
 
@@ -59,7 +71,9 @@ Acronyms stand for:
 \item \code{ppid} Parent-Process ID
 \item \code{pgid} Process-Group ID
 \item \code{uid} User ID
+\item \code{euid} Effective User ID
 \item \code{gid} Group ID
+\item \code{egid} Effective Group ID
 \item \code{prio} Priority level
 }
 
@@ -71,6 +85,10 @@ process priority (higher value).
 getuid()
 # Current UserGroup:
 getgid()
+# Current UserGroup:
+geteuid()
+# Current UserGroup:
+getegid()
 # Process ID
 getpid()
 # parent PID:

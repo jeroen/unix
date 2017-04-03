@@ -23,6 +23,15 @@ SEXP R_setuid(SEXP id){
   return R_getuid();
 }
 
+SEXP R_geteuid(){
+  return Rf_ScalarInteger(geteuid());
+}
+
+SEXP R_seteuid(SEXP id){
+  bail_if(seteuid(Rf_asInteger(id)) < 0, "setuid()");
+  return R_geteuid();
+}
+
 SEXP R_getgid () {
   return Rf_ScalarInteger(getgid());
 }
@@ -30,6 +39,15 @@ SEXP R_getgid () {
 SEXP R_setgid(SEXP id){
   bail_if(setgid(Rf_asInteger(id)) < 0, "setuid()");
   return R_getgid();
+}
+
+SEXP R_getegid () {
+  return Rf_ScalarInteger(getegid());
+}
+
+SEXP R_setegid(SEXP id){
+  bail_if(setegid(Rf_asInteger(id)) < 0, "setuid()");
+  return R_getegid();
 }
 
 SEXP R_getpid () {
