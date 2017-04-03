@@ -5,8 +5,10 @@ test_that("eval_fork works", {
   expect_false(Sys.getpid() == eval_fork(Sys.getpid()))
   expect_equal(getpid(), eval_fork(getppid()))
 
-  # State is inherited
-  set.seed(123)
+  # initiates RNG with a seed (needed below)
+  rnorm(1) 
+  
+  # Test that state is inherited
   x <- eval_fork(rnorm(10))
   y <- eval_fork(rnorm(10))
   z <- rnorm(10)
