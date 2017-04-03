@@ -89,7 +89,7 @@ eval_fork <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
 
 #' @rdname eval_fork
 #' @export
-#' @importFrom grDevices pdf
+#' @importFrom grDevices pdf dev.cur dev.off
 #' @param device graphics device to use in the fork, see [dev.new()]
 #' @param rlimits named list of [rlimit] values, for example: `list(cpu = 60, fsize = 1e6)`.
 #' @param uid evaluate as given user (uid or name). See [setuid()], only for root.
@@ -98,24 +98,23 @@ eval_safe <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
         std_out = stdout(), std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
         gid = NULL){
   orig_expr <- substitute(expr)
-  safe_expr <- call('tryCatch', expr = call('{',
+  out <- eval_fork(expr = tryCatch({
     if(length(uid))
-      make_call(setuid, uid = uid),
+      setuid(uid = uid)
     if(length(gid))
-      make_call(setgid, gid = gid),
+      setgid(gid = gid)
     if(length(device))
-      call('options', device = device),
+      options(device = device)
     if(length(rlimits))
-      call('do.call', what = set_hard_limits, args = as.list(rlimits)),
-    substitute(while(dev.cur() > 1) dev.off()),
-    substitute(options(menu.graphics = FALSE)),
-    substitute(withVisible(orig_expr))
-  ), error = function(e){
+      do.call(set_hard_limits, as.list(rlimits))
+    while(dev.cur() > 1) dev.off()
+    options(menu.graphics = FALSE)
+    withVisible(eval(orig_expr, envir))    
+  }, error = function(e){
     old_class <- attr(e, "class")
     structure(e, class = c(old_class, "eval_fork_error"))
-  }, finally = substitute(while(dev.cur() > 1) dev.off()))
-  out <- eval(call('eval_fork', expr = safe_expr, envir = envir, tmp = tmp,
-                   timeout = timeout, std_out = std_out, std_err = std_err))
+  }, finally = substitute(while(dev.cur() > 1) dev.off())), 
+    tmp = tmp, timeout = timeout, std_out = std_out, std_err = std_err)
   if(inherits(out, "eval_fork_error"))
     base::stop(out)
   if(out$visible)
@@ -142,11 +141,6 @@ set_hard_limits <- function(as = NULL, core = NULL, cpu = NULL, data = NULL, fsi
   rlimit_nofile(nofile, nofile)
   rlimit_nproc(nproc, nproc)
   rlimit_stack(stack, stack)
-}
-
-make_call <- function(fun, ..., pkg = 'unix'){
-  str <- call("::", as.name(pkg), substitute(fun))
-  as.call(list(str, ...))
 }
 
 #' @useDynLib unix R_freeze
