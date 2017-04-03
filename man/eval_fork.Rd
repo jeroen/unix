@@ -5,17 +5,15 @@
 \alias{eval_safe}
 \title{Safe Evaluation}
 \usage{
-eval_fork(expr, envir = parent.frame(), tmp = tempfile("fork"),
-  timeout = 60, std_out = stdout(), std_err = stderr())
+eval_fork(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
+  std_err = stderr())
 
-eval_safe(expr, envir = parent.frame(), tmp = tempfile("fork"),
-  timeout = 60, std_out = stdout(), std_err = stderr(), device = pdf,
-  rlimits = list(), uid = NULL, gid = NULL)
+eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
+  std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
+  gid = NULL)
 }
 \arguments{
 \item{expr}{expression to evaluate}
-
-\item{envir}{the \link{environment} in which expr is to be evaluated}
 
 \item{tmp}{the value of \code{\link[=tempdir]{tempdir()}} inside the forked process}
 

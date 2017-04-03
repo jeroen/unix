@@ -11,7 +11,6 @@
 #' `TRUE`, `FALSE`, filename, connection object or callback function. See also [sys::exec_wait()].
 #' @param std_err if and where to direct child process `STDERR`. Must be one of
 #' `TRUE`, `FALSE`, filename, connection object or callback function. See also [sys::exec_wait()].
-#' @param envir the [environment] in which expr is to be evaluated
 #' @param tmp the value of [tempdir()] inside the forked process
 #' @param timeout maximum time in seconds to allow for call to return
 #' @examples # works like regular eval:
@@ -30,7 +29,7 @@
 #' outcon <- rawConnection(raw(0), "r+")
 #' eval_safe(print(sessionInfo()), std_out = outcon)
 #' rawToChar(rawConnectionValue(outcon))
-eval_fork <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), timeout = 60,
+eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
                       std_out = stdout(), std_err = stderr()){
   # Convert TRUE or filepath into connection objects
   std_out <- if(isTRUE(std_out) || identical(std_out, "")){
@@ -82,7 +81,7 @@ eval_fork <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
   }
   if(!file.exists(tmp))
     dir.create(tmp)
-  clenv <- force(envir)
+  clenv <- force(parent.frame())
   clexpr <- substitute(expr)
   eval_fork_internal(clexpr, clenv, tmp, timeout, outfun, errfun)
 }
@@ -94,7 +93,7 @@ eval_fork <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
 #' @param rlimits named list of [rlimit] values, for example: `list(cpu = 60, fsize = 1e6)`.
 #' @param uid evaluate as given user (uid or name). See [setuid()], only for root.
 #' @param gid evaluate as given group (gid or name). See [setgid()] only for root.
-eval_safe <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), timeout = 60,
+eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60,
         std_out = stdout(), std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
         gid = NULL){
   orig_expr <- substitute(expr)
@@ -109,7 +108,7 @@ eval_safe <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
       do.call(set_hard_limits, as.list(rlimits))
     while(dev.cur() > 1) dev.off()
     options(menu.graphics = FALSE)
-    withVisible(eval(orig_expr, envir))    
+    withVisible(eval(orig_expr, parent.frame()))    
   }, error = function(e){
     old_class <- attr(e, "class")
     structure(e, class = c(old_class, "eval_fork_error"))
