@@ -42,7 +42,8 @@ SEXP R_rlimit_nproc(SEXP a, SEXP b) {
 #ifdef RLIMIT_NPROC
   return R_rlimit(RLIMIT_NPROC, a, b);
 #else
-  Rf_error("RLIMIT_NPROC not available on this system");
+  Rf_warning("RLIMIT_NPROC not available on this system");
+  return R_NilValue;
 #endif
 }
 
@@ -50,6 +51,7 @@ SEXP R_rlimit_memlock(SEXP a, SEXP b) {
 #ifdef RLIMIT_MEMLOCK
   return R_rlimit(RLIMIT_MEMLOCK, a, b);
 #else
-  Rf_error("RLIMIT_MEMLOCK not available on this system");
+  Rf_warning("RLIMIT_MEMLOCK not available on this system");
+  return R_NilValue;
 #endif
 }
