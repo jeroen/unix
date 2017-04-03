@@ -1,7 +1,6 @@
 context("eval_fork")
 
 test_that("eval_fork works", {
-  
   # PID must be different
   expect_false(Sys.getpid() == eval_fork(Sys.getpid()))
   expect_equal(getpid(), eval_fork(getppid()))
@@ -18,7 +17,6 @@ test_that("eval_fork works", {
 })
 
 test_that("eval_fork gives errors", {
-
   # Test regular errors
   expect_error(eval_safe(stop("uhoh")), "uhoh")
   expect_error(eval_safe(blablabla()), "could not find function")
@@ -34,7 +32,6 @@ test_that("eval_fork gives errors", {
 })
 
 test_that("eval_fork works recursively", {
-  skip_on_os("windows")
   expect_equal(eval_fork(eval_fork(1+1)), 2)
   expect_equal(eval_fork(eval_fork(1+1) + eval_fork(1+1)), 4)
 
@@ -63,7 +60,6 @@ test_that("eval_fork works recursively", {
 })
 
 test_that("compatibility with parallel package", {
-
   square_fork <- function(x){
     parallel::mccollect(parallel::mcparallel(x^2))[[1]]
   }
@@ -72,7 +68,6 @@ test_that("compatibility with parallel package", {
   expect_equal(square_fork(5), 25)
   expect_equal(eval_fork(square_fork(6)), 36)
   expect_equal(eval_safe(square_fork(7)), 49)
-
 })
 
 test_that("frozen children get killed",{
@@ -96,7 +91,6 @@ test_that("condition class gets preserved", {
     )
     base::stop(e)
   }
-
 
   err <- tryCatch(eval_safe(test()), error = function(e){e})
   expect_s3_class(err, "error")
