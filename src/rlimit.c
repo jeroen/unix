@@ -14,8 +14,13 @@ SEXP R_rlimit(int resource, SEXP softlim, SEXP hardlim){
   
   //update
   if(Rf_length(softlim) || Rf_length(hardlim)){
-    if(Rf_length(softlim))
+    if(Rf_length(softlim)){
       lim.rlim_cur = R_finite(Rf_asReal(softlim)) ? Rf_asReal(softlim) : RLIM_INFINITY;
+      
+      //If max is too small, we need to try and raise it to at least cur 
+      if(lim.rlim_cur > lim.rlim_max)
+        lim.rlim_max = lim.rlim_cur;
+    }
     if(Rf_length(hardlim))
       lim.rlim_max = R_finite(Rf_asReal(hardlim)) ? Rf_asReal(hardlim) : RLIM_INFINITY;
     bail_if(setrlimit(resource, &lim) < 0, "setrlimit()");
