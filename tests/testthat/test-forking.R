@@ -6,9 +6,12 @@ test_that("eval_fork works", {
   expect_equal(getpid(), eval_fork(getppid()))
 
   # State is inherited
-  n <- 10
-  x <- eval_safe(rnorm(n))
-  expect_identical(x, rnorm(n))
+  set.seed(123)
+  x <- eval_fork(rnorm(10))
+  y <- eval_fork(rnorm(10))
+  z <- rnorm(10)
+  expect_identical(x, y)
+  expect_identical(x, z)
 
   # Test cleanups
   for(i in 1:300){
