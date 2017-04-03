@@ -10,7 +10,7 @@ eval_fork(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 
 eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
   std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
-  gid = NULL, aa_profile = NULL)
+  gid = NULL, profile = NULL)
 }
 \arguments{
 \item{expr}{expression to evaluate}
@@ -33,8 +33,8 @@ eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 
 \item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
 
-\item{aa_profile}{AppArmor profile, see \link[RAppArmor:aa_change_profile]{aa_change_profile()}.
-Available when \code{RAppArmor} is installed (Debian/Ubuntu only)}
+\item{profile}{AppArmor profile, see \code{RAppArmor::aa_change_profile()}.
+Requires the \code{RAppArmor} package (Debian/Ubuntu only)}
 }
 \description{
 Evaluates an expression in a temporary fork so that it has no side effects on the main R session.
