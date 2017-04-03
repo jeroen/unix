@@ -17,7 +17,7 @@ eval_safe(expr, envir = parent.frame(), tmp = tempfile("fork"),
 
 \item{envir}{the \link{environment} in which expr is to be evaluated}
 
-\item{tmp}{the value of \link{tempdir} inside the forked process}
+\item{tmp}{the value of \code{\link[=tempdir]{tempdir()}} inside the forked process}
 
 \item{timeout}{maximum time in seconds to allow for call to return}
 
@@ -31,9 +31,9 @@ eval_safe(expr, envir = parent.frame(), tmp = tempfile("fork"),
 
 \item{rlimits}{named list of \link{rlimit} values, for example: \code{list(cpu = 60, fsize = 1e6)}.}
 
-\item{uid}{evluate as given user. Passed to \code{\link[=seteuid]{seteuid()}} (can only be done by root)}
+\item{uid}{evaluate as given user (uid or name). See \code{\link[=setuid]{setuid()}}, only for root.}
 
-\item{gid}{evluate as given group. Passed to \code{\link[=setegid]{setegid()}} (can only be done by root)}
+\item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
 }
 \description{
 Version of \code{\link[=eval]{eval()}} which evaluates expression in a temporary fork so that it has no side

@@ -12,7 +12,7 @@
 #' @param std_err if and where to direct child process `STDERR`. Must be one of
 #' `TRUE`, `FALSE`, filename, connection object or callback function. See also [sys::exec_wait()].
 #' @param envir the [environment] in which expr is to be evaluated
-#' @param tmp the value of [tempdir] inside the forked process
+#' @param tmp the value of [tempdir()] inside the forked process
 #' @param timeout maximum time in seconds to allow for call to return
 #' @examples # works like regular eval:
 #' eval_safe(rnorm(5))
@@ -92,8 +92,8 @@ eval_fork <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), time
 #' @importFrom grDevices pdf
 #' @param device graphics device to use in the fork, see [dev.new()]
 #' @param rlimits named list of [rlimit] values, for example: `list(cpu = 60, fsize = 1e6)`.
-#' @param uid evaluate as given user (uid or name). Passed to [setuid()] (can only be done by root)
-#' @param gid evaluate as given group (uid or name). Passed to [setgid()] (can only be done by root)
+#' @param uid evaluate as given user (uid or name). See [setuid()], only for root.
+#' @param gid evaluate as given group (gid or name). See [setgid()] only for root.
 eval_safe <- function(expr, envir = parent.frame(), tmp = tempfile("fork"), timeout = 60,
         std_out = stdout(), std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
         gid = NULL){
