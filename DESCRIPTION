@@ -12,4 +12,6 @@ OS_type: unix
 SystemRequirements: POSIX.1-2001
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
-Suggests: testthat
+Suggests: 
+    RAppArmor,
+    testthat

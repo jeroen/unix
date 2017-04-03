@@ -1,8 +1,8 @@
 #' Safe Evaluation
 #'
-#' Version of [eval()] which evaluates expression in a temporary fork so that it has no side
-#' effects on the main R session. For [eval_safe()] the expression is wrapped in additional R 
-#' code to set [rlimits][rlimit], catch errors, close graphics devices, etc.
+#' Evaluates an expression in a temporary fork so that it has no side effects on the main R session. 
+#' For [eval_safe()] the expression is wrapped in additional R code to set [rlimits][rlimit], catch 
+#' errors, close graphics devices, etc (recommended). 
 #'
 #' @export
 #' @rdname eval_fork
@@ -28,7 +28,7 @@
 #' # Capture output
 #' outcon <- rawConnection(raw(0), "r+")
 #' eval_safe(print(sessionInfo()), std_out = outcon)
-#' rawToChar(rawConnectionValue(outcon))
+#' cat(rawToChar(rawConnectionValue(outcon)))
 eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
                       std_out = stdout(), std_err = stderr()){
   # Convert TRUE or filepath into connection objects
@@ -93,9 +93,11 @@ eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
 #' @param rlimits named list of [rlimit] values, for example: `list(cpu = 60, fsize = 1e6)`.
 #' @param uid evaluate as given user (uid or name). See [setuid()], only for root.
 #' @param gid evaluate as given group (gid or name). See [setgid()] only for root.
-eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60,
-        std_out = stdout(), std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
-        gid = NULL){
+#' @param aa_profile AppArmor profile, see [aa_change_profile()][RAppArmor::aa_change_profile]. 
+#' Available when `RAppArmor` is installed (Debian/Ubuntu only)
+eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(), 
+                      std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
+                      gid = NULL, aa_profile = NULL){
   orig_expr <- substitute(expr)
   out <- eval_fork(expr = tryCatch({
     if(length(uid))
@@ -106,6 +108,13 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60,
       options(device = device)
     if(length(rlimits))
       do.call(set_hard_limits, as.list(rlimits))
+    if(length(aa_profile)){
+      tryCatch(check_apparmor(), error = function(e){
+        warning("You can only use the 'aa_profile' parameter when RAppArmor is installed")
+        stop(e)
+      })
+      RAppArmor::aa_change_profile(aa_profile)
+    }
     while(dev.cur() > 1) dev.off()
     options(menu.graphics = FALSE)
     withVisible(eval(orig_expr, parent.frame()))    

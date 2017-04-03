@@ -10,7 +10,7 @@ eval_fork(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 
 eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
   std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
-  gid = NULL)
+  gid = NULL, aa_profile = NULL)
 }
 \arguments{
 \item{expr}{expression to evaluate}
@@ -32,11 +32,14 @@ eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 \item{uid}{evaluate as given user (uid or name). See \code{\link[=setuid]{setuid()}}, only for root.}
 
 \item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
+
+\item{aa_profile}{AppArmor profile, see \link[RAppArmor:aa_change_profile]{aa_change_profile()}.
+Available when \code{RAppArmor} is installed (Debian/Ubuntu only)}
 }
 \description{
-Version of \code{\link[=eval]{eval()}} which evaluates expression in a temporary fork so that it has no side
-effects on the main R session. For \code{\link[=eval_safe]{eval_safe()}} the expression is wrapped in additional R
-code to set \link[=rlimit]{rlimits}, catch errors, close graphics devices, etc.
+Evaluates an expression in a temporary fork so that it has no side effects on the main R session.
+For \code{\link[=eval_safe]{eval_safe()}} the expression is wrapped in additional R code to set \link[=rlimit]{rlimits}, catch
+errors, close graphics devices, etc (recommended).
 }
 \examples{
 # works like regular eval:
@@ -54,5 +57,5 @@ try(eval_safe(svd(matrix(rnorm(1e8), 1e4)), timeout = 2))
 # Capture output
 outcon <- rawConnection(raw(0), "r+")
 eval_safe(print(sessionInfo()), std_out = outcon)
-rawToChar(rawConnectionValue(outcon))
+cat(rawToChar(rawConnectionValue(outcon)))
 }
