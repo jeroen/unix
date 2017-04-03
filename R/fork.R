@@ -101,16 +101,17 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdo
                       gid = NULL, priority = NULL, profile = NULL){
   orig_expr <- substitute(expr)
   out <- eval_fork(expr = tryCatch({
-    if(length(uid))
-      setuid(uid = uid)
-    if(length(gid))
-      setgid(gid = gid)
-    if(length(device))
-      options(device = device)
+    # set limits and gid before uid!
     if(length(priority))
-      setpriority(priority)
+      setpriority(priority)    
     if(length(rlimits))
       do.call(set_hard_limits, as.list(rlimits))
+    if(length(gid))
+      setgid(gid = gid)    
+    if(length(uid))
+      setuid(uid = uid)
+    if(length(device))
+      options(device = device)
     if(length(profile)){
       tryCatch(check_apparmor(), error = function(e){
         warning("You can only use the 'profile' parameter when RAppArmor is installed")
