@@ -42,8 +42,8 @@ Linux capability value for CAP_SYS_NICE.
 \dontrun{
 # Current affinity
 ncores()
-getaffinity();
-getaffinity_count();
+getaffinity()
+getaffinity_count()
 
 # Restrict process to core number 1.
 setaffinity(1)

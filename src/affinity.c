@@ -4,7 +4,7 @@
 #include <Rinternals.h>
 
 // TODO: better feature test?
-#ifdef cpu_set_t
+#ifdef CPU_ZERO
 #define HAS_AFFINITY
 #endif
 
