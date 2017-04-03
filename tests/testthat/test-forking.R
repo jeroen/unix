@@ -102,3 +102,23 @@ test_that("condition class gets preserved", {
   expect_s3_class(err, "my_custom_class")
 
 })
+
+test_that("scope environment is correct",{
+  (test <- function(){
+    mydev <- grDevices::pdf
+    timer <- 60
+    x <- 42
+    blabla <- function(){
+      return(x)
+    }
+    testfun <- function(){
+      blabla()
+    }
+    testerr <- function(){
+      doesnotexit()
+    }
+    expect_equal(42, eval_safe(testfun(), dev = mydev, timeout = timer))
+    expect_equal(42, eval_fork(testfun(), timeout = timer))
+    expect_error(eval_safe(testerr()), "doesnotexit")
+  })()
+})
