@@ -6,7 +6,8 @@
 \title{Safe Evaluation}
 \usage{
 eval_fork(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
-  std_err = stderr())
+  std_err = stderr(), priority = NULL, uid = NULL, gid = NULL,
+  rlimits = NULL)
 
 eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
   std_err = stderr(), device = pdf, rlimits = list(), uid = NULL,
@@ -25,15 +26,15 @@ eval_safe(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(),
 \item{std_err}{if and where to direct child process \code{STDERR}. Must be one of
 \code{TRUE}, \code{FALSE}, filename, connection object or callback function. See also \code{\link[sys:exec_wait]{sys::exec_wait()}}.}
 
-\item{device}{graphics device to use in the fork, see \code{\link[=dev.new]{dev.new()}}}
-
-\item{rlimits}{named list of \link{rlimit} values, for example: \code{list(cpu = 60, fsize = 1e6)}.}
+\item{priority}{process priority, see \code{\link[=setpriority]{setpriority()}}.}
 
 \item{uid}{evaluate as given user (uid or name). See \code{\link[=setuid]{setuid()}}, only for root.}
 
 \item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
 
-\item{priority}{process priority, see \code{\link[=setpriority]{setpriority()}}.}
+\item{rlimits}{named list of \link{rlimit} values, for example: \code{list(cpu = 60, fsize = 1e6)}.}
+
+\item{device}{graphics device to use in the fork, see \code{\link[=dev.new]{dev.new()}}}
 
 \item{profile}{AppArmor profile, see \code{RAppArmor::aa_change_profile()}.
 Requires the \code{RAppArmor} package (Debian/Ubuntu only)}

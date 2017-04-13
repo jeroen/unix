@@ -190,7 +190,48 @@ static SEXP unserialize_from_pipe(int results[2]){
   return R_Unserialize(&stream);
 }
 
-SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SEXP errfun){
+#ifndef RLIMIT_NPROC
+#define RLIMIT_NPROC NA_INTEGER
+#endif
+
+#ifndef RLIMIT_MEMLOCK
+#define RLIMIT_MEMLOCK NA_INTEGER
+#endif
+
+// Order should match the R function
+static int rlimit_types[9] = {
+  RLIMIT_AS, //0
+  RLIMIT_CORE, //1
+  RLIMIT_CPU, //2
+  RLIMIT_DATA, //3
+  RLIMIT_FSIZE, //4
+  RLIMIT_MEMLOCK, //5
+  RLIMIT_NOFILE, //6
+  RLIMIT_NPROC, //7  
+  RLIMIT_STACK, //8
+};
+
+//VECTOR of length n;
+void set_process_rlimits(SEXP limitvec){
+  if(!Rf_isNumeric(limitvec))
+    Rf_error("limitvec is not numeric");
+  size_t len = sizeof(rlimit_types)/sizeof(rlimit_types[0]);
+  if(Rf_length(limitvec) != len)
+    Rf_error("limitvec wrong size");
+  for(int i = 0; i < len; i++){
+    int resource = rlimit_types[i];
+    double val = REAL(limitvec)[i];
+    if(ISNA(resource) || ISNA(val))
+      continue;
+    rlim_t rlim_val = val;
+    Rprintf("Setting %d to %d\n", resource,  val);
+    struct rlimit lim = {rlim_val, rlim_val};
+    bail_if(setrlimit(resource, &lim) < 0, "setrlimit()");
+  }
+}
+
+SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SEXP errfun, 
+                 SEXP priority, SEXP uid, SEXP gid, SEXP limitvec){
   int results[2];
   int pipe_out[2];
   int pipe_err[2];
@@ -206,7 +247,7 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
     //prevents signals from being propagated to fork
     setpgid(0, 0);
 
-    //Linux only: suicide when parent dies
+    //Linux only: commit suicide when parent dies
 #ifdef PR_SET_PDEATHSIG
     prctl(PR_SET_PDEATHSIG, SIGKILL);
 #endif
@@ -216,6 +257,19 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
     err = pipe_err[w];
     prepare_fork(CHAR(STRING_ELT(subtmp, 0)));
 
+    //set process priority (before changing uid)
+    if(Rf_length(priority))
+      bail_if(setpriority(PRIO_PROCESS, 0, Rf_asInteger(priority)) < 0, "setpriority()");
+    
+    //set rlimits (before changing uid)
+    set_process_rlimits(limitvec);
+    
+    //set user and group ID (group first!)
+    if(Rf_length(gid))
+      bail_if(setuid(Rf_asInteger(gid)), "setuid()");
+    if(Rf_length(uid))
+      bail_if(setgid(Rf_asInteger(uid)), "setgid()");
+    
     //close read pipe
     close(results[r]);
 

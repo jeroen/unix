@@ -29,8 +29,8 @@
 #' outcon <- rawConnection(raw(0), "r+")
 #' eval_safe(print(sessionInfo()), std_out = outcon)
 #' cat(rawToChar(rawConnectionValue(outcon)))
-eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
-                      std_out = stdout(), std_err = stderr()){
+eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdout(), 
+        std_err = stderr(), priority = NULL, uid = NULL, gid = NULL, rlimits = NULL){
   # Convert TRUE or filepath into connection objects
   std_out <- if(isTRUE(std_out) || identical(std_out, "")){
     stdout()
@@ -79,11 +79,9 @@ eval_fork <- function(expr, tmp = tempfile("fork"), timeout = 60,
       }
     }
   }
-  if(!file.exists(tmp))
-    dir.create(tmp)
   clenv <- force(parent.frame())
   clexpr <- substitute(expr)
-  eval_fork_internal(clexpr, clenv, tmp, timeout, outfun, errfun)
+  eval_fork_internal(clexpr, clenv, tmp, timeout, outfun, errfun, priority, uid, gid, rlimits)
 }
 
 #' @rdname eval_fork
@@ -101,15 +99,6 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdo
                       gid = NULL, priority = NULL, profile = NULL){
   orig_expr <- substitute(expr)
   out <- eval_fork(expr = tryCatch({
-    # set limits and gid before uid!
-    if(length(priority))
-      setpriority(priority)    
-    if(length(rlimits))
-      do.call(set_hard_limits, as.list(rlimits))
-    if(length(gid))
-      setgid(gid = gid)    
-    if(length(uid))
-      setuid(uid = uid)
     if(length(device))
       options(device = device)
     if(length(profile)){
@@ -126,7 +115,8 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdo
     old_class <- attr(e, "class")
     structure(e, class = c(old_class, "eval_fork_error"))
   }, finally = substitute(while(dev.cur() > 1) dev.off())), 
-    tmp = tmp, timeout = timeout, std_out = std_out, std_err = std_err)
+    tmp = tmp, timeout = timeout, std_out = std_out, std_err = std_err, priority = priority,
+      uid = uid, gid = gid, rlimits = rlimits)
   if(inherits(out, "eval_fork_error"))
     base::stop(out)
   if(out$visible)
@@ -136,23 +126,35 @@ eval_safe <- function(expr, tmp = tempfile("fork"), timeout = 60, std_out = stdo
 }
 
 #' @useDynLib unix R_eval_fork
-eval_fork_internal <- function(expr, envir, tmp, timeout, outfun, errfun){
+eval_fork_internal <- function(expr, envir, tmp, timeout, outfun, errfun, priority, 
+                               uid, gid, rlimits){
+  if(!file.exists(tmp))
+    dir.create(tmp)
+  if(length(uid))
+    stopifnot(is.numeric(uid))
+  if(length(gid))
+    stopifnot(is.numeric(gid))
+  if(length(priority))
+    stopifnot(is.numeric(priority))
+  if(length(timeout))
+    stopifnot(is.numeric(timeout))
+  uid <- as.integer(uid)
+  gid <- as.integer(gid)
+  priority <- as.integer(priority)
+  rlimits <- do.call(parse_limits, as.list(rlimits))  
   timeout <- as.numeric(timeout)
   tmp <- normalizePath(tmp)
-  .Call(R_eval_fork, expr, envir, tmp, timeout, outfun, errfun)
+  .Call(R_eval_fork, expr, envir, tmp, timeout, outfun, errfun, priority, uid, gid, rlimits)
 }
 
-set_hard_limits <- function(as = NULL, core = NULL, cpu = NULL, data = NULL, fsize = NULL,
-                            memlock = NULL, nofile = NULL, nproc = NULL, stack = NULL){
-  rlimit_as(as, as)
-  rlimit_core(core, core)
-  rlimit_cpu(cpu, cpu)
-  rlimit_data(data, data)
-  rlimit_fsize(fsize, fsize)
-  rlimit_memlock(memlock, memlock)
-  rlimit_nofile(nofile, nofile)
-  rlimit_nproc(nproc, nproc)
-  rlimit_stack(stack, stack)
+# Limits MUST be named
+parse_limits <- function(..., as = NA, core = NA, cpu = NA, data = NA, fsize = NA,
+                            memlock = NA, nofile = NA, nproc = NA, stack = NA){
+  unknown <- list(...)
+  if(length(unknown))
+    stop("Unsupported rlimits: ", paste(names(unknown), collapse = ", "))
+  out <- as.numeric(c(as, core, cpu, data, fsize, memlock, nofile, nproc, stack))
+  structure(out, names = names(formals(sys.function()))[-1])
 }
 
 #' @useDynLib unix R_freeze
