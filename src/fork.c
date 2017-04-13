@@ -224,7 +224,7 @@ void set_process_rlimits(SEXP limitvec){
     if(ISNA(resource) || ISNA(val))
       continue;
     rlim_t rlim_val = val;
-    Rprintf("Setting %d to %d\n", resource,  val);
+    //Rprintf("Setting %d to %d\n", resource,  rlim_val);
     struct rlimit lim = {rlim_val, rlim_val};
     bail_if(setrlimit(resource, &lim) < 0, "setrlimit()");
   }
