@@ -1,6 +1,6 @@
 Package: unix
 Title: Unix System Utilities
-Version: 1.1
+Version: 1.3
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Description: Bindings to system utilities found in most Unix systems, 
