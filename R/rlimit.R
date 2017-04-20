@@ -1,13 +1,16 @@
 #' Resource Limits
 #' 
 #' Get and set process resource limits. Each function returns the current limits, and
-#' can optionally update the limit by passing argument values.
+#' can optionally update the limit by passing argument values. The `rlimit_all()` 
+#' function is a convenience wrapper which prints all current hard and soft limits.
+#' 
 #' 
 #' Each resource has an associated soft and  hard limit. The soft limit is the value
 #' that the kernel enforces for the corresponding resource.  The hard limit acts as a
 #' ceiling for the soft limit: an unprivileged process may set only its soft limit to 
 #' a value in the range from 0 up to the hard limit, and (irreversibly) lower its hard 
 #' limit.
+#' 
 #' 
 #' Definitons from the [Linux manual page](http://man7.org/linux/man-pages/man2/setrlimit.2.html)
 #' are as follows:
@@ -133,4 +136,26 @@ rlimit_stack <- function(cur = NULL, max = NULL){
   if(length(max)) stopifnot(is.numeric(max))
   out <- .Call(R_rlimit_stack, as.numeric(cur), as.numeric(max))
   structure(as.list(out), names = c("cur", "max"))
+}
+
+#' @rdname rlimit
+#' @export
+#' @examples # Print all hard and soft limits
+#' rlimits()
+rlimit_all <- function(){
+  data <- rbind(
+    as = rlimit_as(),
+    core = rlimit_core(),
+    cpu = rlimit_cpu(),
+    data = rlimit_data(),
+    fsize = rlimit_fsize(),
+    memlock = suppressWarnings(rlimit_memlock()),
+    nofile = rlimit_nofile(),
+    nproc = suppressWarnings(rlimit_nproc()),
+    stack = rlimit_stack()
+  )
+  list(
+    cur = unlist(data[,"cur"]),
+    max = unlist(data[,"max"])
+  )
 }

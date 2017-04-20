@@ -11,6 +11,7 @@
 \alias{rlimit_nofile}
 \alias{rlimit_nproc}
 \alias{rlimit_stack}
+\alias{rlimit_all}
 \title{Resource Limits}
 \usage{
 rlimit_as(cur = NULL, max = NULL)
@@ -30,6 +31,8 @@ rlimit_nofile(cur = NULL, max = NULL)
 rlimit_nproc(cur = NULL, max = NULL)
 
 rlimit_stack(cur = NULL, max = NULL)
+
+rlimit_all()
 }
 \arguments{
 \item{cur}{set the current (soft) limit for this resource. See details.}
@@ -38,7 +41,8 @@ rlimit_stack(cur = NULL, max = NULL)
 }
 \description{
 Get and set process resource limits. Each function returns the current limits, and
-can optionally update the limit by passing argument values.
+can optionally update the limit by passing argument values. The \code{rlimit_all()}
+function is a convenience wrapper which prints all current hard and soft limits.
 }
 \details{
 Each resource has an associated soft and  hard limit. The soft limit is the value
@@ -80,6 +84,8 @@ rlimit_as(1e9)
 
 # Set a hard limit
 rlimit_as(max = 1e10)
+# Print all hard and soft limits
+rlimits()
 }
 \references{
 \href{http://man7.org/linux/man-pages/man2/setrlimit.2.html}{GETRLIMIT(2)}
