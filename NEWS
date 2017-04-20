@@ -1,5 +1,5 @@
 1.1
-  - Move eval_fork() and eval_safe() from 'sys' to here
+  - Added geteuid(), seteuid(), getegid(), setegid()
   
 1.0
   - Initial CRAN release
