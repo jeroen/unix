@@ -4,7 +4,7 @@
 #include <Rinternals.h>
 #include <sys/resource.h>
 
-void bail_if(int err, const char * what);
+extern void bail_if(int err, const char * what);
 
 SEXP R_rlimit(int resource, SEXP softlim, SEXP hardlim){
   
