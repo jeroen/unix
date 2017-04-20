@@ -38,19 +38,48 @@
 #' 
 #' @rdname rlimit
 #' @name rlimit
-#' @useDynLib unix R_rlimit_as
 #' @export
 #' @param cur set the current (soft) limit for this resource. See details.
 #' @param max set the max (hard) limit for this resource. See details.
 #' @references [GETRLIMIT(2)](http://man7.org/linux/man-pages/man2/setrlimit.2.html)
-#' @examples # Get current limit
+#' @examples # Print all limits
+#' rlimit_all()
+#' 
+#' # Get one limit
 #' rlimit_as()
 #' 
 #' # Set a soft limit
-#' rlimit_as(1e9)
-#'
-#' # Set a hard limit
+#' lim <- rlimit_as(1e9)
+#' print(lim)
+#' 
+#' # Reset the limit to max
+#' rlimit_as(cur = lim$max)
+#' 
+#' \dontrun{
+#' # Set a hard limit (irreversible)
 #' rlimit_as(max = 1e10)
+#' }
+rlimit_all <- function(){
+  data <- rbind(
+    as = rlimit_as(),
+    core = rlimit_core(),
+    cpu = rlimit_cpu(),
+    data = rlimit_data(),
+    fsize = rlimit_fsize(),
+    memlock = suppressWarnings(rlimit_memlock()),
+    nofile = rlimit_nofile(),
+    nproc = suppressWarnings(rlimit_nproc()),
+    stack = rlimit_stack()
+  )
+  list(
+    cur = unlist(data[,"cur"]),
+    max = unlist(data[,"max"])
+  )
+}
+
+#' @rdname rlimit
+#' @useDynLib unix R_rlimit_as
+#' @export
 rlimit_as <- function(cur = NULL, max = NULL){
   if(length(cur)) stopifnot(is.numeric(cur))
   if(length(max)) stopifnot(is.numeric(max))
@@ -136,26 +165,4 @@ rlimit_stack <- function(cur = NULL, max = NULL){
   if(length(max)) stopifnot(is.numeric(max))
   out <- .Call(R_rlimit_stack, as.numeric(cur), as.numeric(max))
   structure(as.list(out), names = c("cur", "max"))
-}
-
-#' @rdname rlimit
-#' @export
-#' @examples # Print all hard and soft limits
-#' rlimits()
-rlimit_all <- function(){
-  data <- rbind(
-    as = rlimit_as(),
-    core = rlimit_core(),
-    cpu = rlimit_cpu(),
-    data = rlimit_data(),
-    fsize = rlimit_fsize(),
-    memlock = suppressWarnings(rlimit_memlock()),
-    nofile = rlimit_nofile(),
-    nproc = suppressWarnings(rlimit_nproc()),
-    stack = rlimit_stack()
-  )
-  list(
-    cur = unlist(data[,"cur"]),
-    max = unlist(data[,"max"])
-  )
 }

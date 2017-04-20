@@ -2,6 +2,7 @@
 % Please edit documentation in R/rlimit.R
 \name{rlimit}
 \alias{rlimit}
+\alias{rlimit_all}
 \alias{rlimit_as}
 \alias{rlimit_core}
 \alias{rlimit_cpu}
@@ -11,9 +12,10 @@
 \alias{rlimit_nofile}
 \alias{rlimit_nproc}
 \alias{rlimit_stack}
-\alias{rlimit_all}
 \title{Resource Limits}
 \usage{
+rlimit_all()
+
 rlimit_as(cur = NULL, max = NULL)
 
 rlimit_core(cur = NULL, max = NULL)
@@ -31,8 +33,6 @@ rlimit_nofile(cur = NULL, max = NULL)
 rlimit_nproc(cur = NULL, max = NULL)
 
 rlimit_stack(cur = NULL, max = NULL)
-
-rlimit_all()
 }
 \arguments{
 \item{cur}{set the current (soft) limit for this resource. See details.}
@@ -76,16 +76,23 @@ Note that the support for enforcing limits very widely by system. In particular
 by the operating system (and doesn't work at all on MacOS).
 }
 \examples{
-# Get current limit
+# Print all limits
+rlimit_all()
+
+# Get one limit
 rlimit_as()
 
 # Set a soft limit
-rlimit_as(1e9)
+lim <- rlimit_as(1e9)
+print(lim)
 
-# Set a hard limit
+# Reset the limit to max
+rlimit_as(cur = lim$max)
+
+\dontrun{
+# Set a hard limit (irreversible)
 rlimit_as(max = 1e10)
-# Print all hard and soft limits
-rlimits()
+}
 }
 \references{
 \href{http://man7.org/linux/man-pages/man2/setrlimit.2.html}{GETRLIMIT(2)}
