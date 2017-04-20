@@ -3,8 +3,8 @@ Title: Unix System Utilities
 Version: 1.3
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
-Description: Bindings to system utilities found in most Unix systems, 
-    mainly POSIX functions which are not part of the Standard C Library.
+Description: Bindings to system utilities found in most Unix systems such as
+    POSIX functions which are not part of the Standard C Library.
 License: MIT + file LICENSE
 URL: https://github.com/jeroen/unix
 BugReports: https://github.com/jeroen/unix/issues
@@ -12,5 +12,4 @@ OS_type: unix
 SystemRequirements: POSIX.1-2001
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
-Suggests: 
-    testthat
+Suggests: testthat
