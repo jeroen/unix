@@ -1,5 +1,6 @@
 1.1
   - Added geteuid(), seteuid(), getegid(), setegid()
+  - Add rlimit_all() wrapper to show all current limits
   
 1.0
   - Initial CRAN release

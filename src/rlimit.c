@@ -43,12 +43,20 @@ SEXP R_rlimit_nofile(SEXP a, SEXP b) {return R_rlimit(RLIMIT_NOFILE, a, b);}
 SEXP R_rlimit_stack(SEXP a, SEXP b) {return R_rlimit(RLIMIT_STACK, a, b);}
 
 /* these are not available on Solaris 10 */
+
+SEXP make_navec(){
+  SEXP out = Rf_allocVector(REALSXP, 2);
+  REAL(out)[0] = NA_REAL;
+  REAL(out)[1] = NA_REAL;
+  return(out);
+}
+
 SEXP R_rlimit_nproc(SEXP a, SEXP b) {
 #ifdef RLIMIT_NPROC
   return R_rlimit(RLIMIT_NPROC, a, b);
 #else
   Rf_warning("RLIMIT_NPROC not available on this system");
-  return R_NilValue;
+  return make_navec();
 #endif
 }
 
@@ -57,6 +65,6 @@ SEXP R_rlimit_memlock(SEXP a, SEXP b) {
   return R_rlimit(RLIMIT_MEMLOCK, a, b);
 #else
   Rf_warning("RLIMIT_MEMLOCK not available on this system");
-  return R_NilValue;
+  return make_navec();
 #endif
 }
