@@ -34,6 +34,11 @@ SEXP R_rlimit(int resource, SEXP softlim, SEXP hardlim){
   return out;
 }
 
+// Missing on OpenBSD
+#ifndef RLIMIT_AS
+#define RLIMIT_AS RLIMIT_DATA
+#endif
+
 SEXP R_rlimit_as(SEXP a, SEXP b) {return R_rlimit(RLIMIT_AS, a, b);}
 SEXP R_rlimit_core(SEXP a, SEXP b) {return R_rlimit(RLIMIT_CORE, a, b);}
 SEXP R_rlimit_cpu(SEXP a, SEXP b) {return R_rlimit(RLIMIT_CPU, a, b);}
