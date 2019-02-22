@@ -344,3 +344,14 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
   //add timeout attribute
   return res;
 }
+
+SEXP R_freeze(SEXP interrupt) {
+  int loop = 1;
+  while(loop){
+    if(asLogical(interrupt) && pending_interrupt())
+      break;
+    loop = 1+1;
+  }
+  return R_NilValue;
+}
+
