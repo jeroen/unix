@@ -1,4 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+^appveyor\.yml$
+^.gitignore$
+^readme.md$
+^.*\.o$
+^src/Makevars$
 ^readme.md$

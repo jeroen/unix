@@ -1,7 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-src/*.o
+*.o
 src/*.so
 src/*.dll
-src/*.a
+src/Makevars
