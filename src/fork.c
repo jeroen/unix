@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 #ifdef __linux__
 #include <sys/prctl.h>
