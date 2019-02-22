@@ -1,7 +1,13 @@
+1.5
+  - Fix complication on Solaris
+  
+1.4
+  - eval_fork and some more tools have been moved from 'sys' into
+    this package.
+    
 1.1
   - Added geteuid(), seteuid(), getegid(), setegid()
   - Add rlimit_all() wrapper to show all current limits
   
 1.0
   - Initial CRAN release
-  
