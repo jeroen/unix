@@ -1,5 +1,5 @@
 Package: unix
-Title: Unix System Utilities
+Title: POSIX System Utilities
 Version: 1.4
 Authors@R: person("Jeroen", "Ooms", email = "jeroen@berkeley.edu", 
     comment = c(ORCID = "0000-0002-4035-0289"), role = c("aut", "cre"))
@@ -12,4 +12,6 @@ OS_type: unix
 SystemRequirements: POSIX.1-2001
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: testthat
+Suggests:
+    testthat
+Language: en-US
