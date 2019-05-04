@@ -31,9 +31,7 @@
 #' Non root user may only raise this value (decrease priority)
 #' @param profile AppArmor profile, see `RAppArmor::aa_change_profile()`.
 #' Requires the `RAppArmor` package (Debian/Ubuntu only)
-#' @examples #Only works on Unix
-#' if(.Platform$OS.type == "unix"){
-#'
+#' @examples
 #' # works like regular eval:
 #' eval_safe(rnorm(5))
 #'
@@ -51,7 +49,6 @@
 #' eval_safe(print(sessionInfo()), std_out = outcon)
 #' cat(rawToChar(rawConnectionValue(outcon)))
 #' close(outcon)
-#' }
 eval_safe <- function(expr, tmp = tempfile("fork"), std_out = stdout(), std_err = stderr(),
                       timeout = 0, priority = NULL, uid = NULL, gid = NULL, rlimits = NULL,
                       profile = NULL, device = pdf){

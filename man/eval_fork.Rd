@@ -54,9 +54,6 @@ includes \code{libcurl} which has been built on OSX against native SecureTranspo
 than OpenSSL for https connections. The same limitations hold for e.g. \code{parallel::mcparallel()}.
 }
 \examples{
-#Only works on Unix
-if(.Platform$OS.type == "unix"){
-
 # works like regular eval:
 eval_safe(rnorm(5))
 
@@ -74,5 +71,4 @@ outcon <- rawConnection(raw(0), "r+")
 eval_safe(print(sessionInfo()), std_out = outcon)
 cat(rawToChar(rawConnectionValue(outcon)))
 close(outcon)
-}
 }
