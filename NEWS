@@ -1,3 +1,6 @@
+1.5.1
+  - CRAN fix: do not use CPP in configure
+
 1.5
   - Fix complication on Solaris
   
