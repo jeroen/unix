@@ -1,3 +1,6 @@
+1.5.2
+  - Add 'AppArmor' in SystemRequirements to help rstudio/r-system-requirements
+
 1.5.1
   - CRAN fix: do not use CPP in configure
 
