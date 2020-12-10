@@ -49,9 +49,9 @@ setpriority(prio)
 kill(pid, signal = SIGTERM)
 }
 \arguments{
-\item{uid}{User ID from \code{/etc/passwd}.}
+\item{uid}{User ID from \verb{/etc/passwd}.}
 
-\item{gid}{Group ID from \code{/etc/group}.}
+\item{gid}{Group ID from \verb{/etc/group}.}
 
 \item{pgid}{Process Group ID. Default \code{0} sets pgid to the current pid.}
 
@@ -59,7 +59,7 @@ kill(pid, signal = SIGTERM)
 
 \item{pid}{process ID (integer)}
 
-\item{signal}{a signal number (integer), defaults to \link[tools:SIGTERM]{tools::SIGTERM}.}
+\item{signal}{a signal number (integer), defaults to \link[tools:pskill]{tools::SIGTERM}.}
 }
 \description{
 Get or set attributes of the current process.
@@ -105,8 +105,8 @@ getpriority()
 setpriority(getpriority() + 1)
 }
 \references{
-\href{http://man7.org/linux/man-pages/man2/getuid.2.html}{GETUID(2)}
-\href{http://man7.org/linux/man-pages/man2/getpid.2.html}{GETPID(2)}
-\href{http://man7.org/linux/man-pages/man2/getpgid.2.html}{GETPGID(2)}
-\href{http://man7.org/linux/man-pages/man2/getpriority.2.html}{GETPRIORITY(2)}
+\href{https://man7.org/linux/man-pages/man2/getuid.2.html}{GETUID(2)}
+\href{https://man7.org/linux/man-pages/man2/getpid.2.html}{GETPID(2)}
+\href{https://man7.org/linux/man-pages/man2/getpgid.2.html}{GETPGID(2)}
+\href{https://man7.org/linux/man-pages/man2/getpriority.2.html}{GETPRIORITY(2)}
 }

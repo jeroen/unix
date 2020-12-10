@@ -12,7 +12,7 @@
 #' @export
 #' @param path directory of the new root
 #' @useDynLib unix R_chroot
-#' @references [CHROOT(2)](http://man7.org/linux/man-pages/man2/chroot.2.html)
+#' @references [CHROOT(2)](https://man7.org/linux/man-pages/man2/chroot.2.html)
 chroot <- function(path = getwd()){
   path <- normalizePath(path, mustWork = TRUE)
   .Call(R_chroot, path)

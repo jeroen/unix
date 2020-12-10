@@ -5,12 +5,27 @@
 \alias{eval_fork}
 \title{Safe Evaluation}
 \usage{
-eval_safe(expr, tmp = tempfile("fork"), std_out = stdout(),
-  std_err = stderr(), timeout = 0, priority = NULL, uid = NULL,
-  gid = NULL, rlimits = NULL, profile = NULL, device = pdf)
+eval_safe(
+  expr,
+  tmp = tempfile("fork"),
+  std_out = stdout(),
+  std_err = stderr(),
+  timeout = 0,
+  priority = NULL,
+  uid = NULL,
+  gid = NULL,
+  rlimits = NULL,
+  profile = NULL,
+  device = pdf
+)
 
-eval_fork(expr, tmp = tempfile("fork"), std_out = stdout(),
-  std_err = stderr(), timeout = 0)
+eval_fork(
+  expr,
+  tmp = tempfile("fork"),
+  std_out = stdout(),
+  std_err = stderr(),
+  timeout = 0
+)
 }
 \arguments{
 \item{expr}{expression to evaluate}
@@ -30,9 +45,9 @@ Non root user may only raise this value (decrease priority)}
 
 \item{priority}{(integer) priority of the child process. High value is low priority.}
 
-\item{uid}{evaluate as given user (uid or name). See \code{\link[unix:setuid]{unix::setuid()}}, only for root.}
+\item{uid}{evaluate as given user (uid or name). See \code{\link[=setuid]{setuid()}}, only for root.}
 
-\item{gid}{evaluate as given group (gid or name). See \code{\link[unix:setgid]{unix::setgid()}} only for root.}
+\item{gid}{evaluate as given group (gid or name). See \code{\link[=setgid]{setgid()}} only for root.}
 
 \item{rlimits}{named vector/list with rlimit values, for example: \code{c(cpu = 60, fsize = 1e6)}.}
 
@@ -60,7 +75,7 @@ eval_safe(rnorm(5))
 # Exceptions get propagated
 test <- function() { doesnotexit() }
 tryCatch(eval_safe(test()), error = function(e){
-  cat("oh no!", e$message, "\\n")
+  cat("oh no!", e$message, "\n")
 })
 
 # Honor interrupt and timeout, even inside C evaluations

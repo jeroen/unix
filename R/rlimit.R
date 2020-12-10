@@ -12,7 +12,7 @@
 #' limit.
 #' 
 #' 
-#' Definitons from the [Linux manual page](http://man7.org/linux/man-pages/man2/setrlimit.2.html)
+#' Definitons from the [Linux manual page](https://man7.org/linux/man-pages/man2/setrlimit.2.html)
 #' are as follows:
 #' 
 #'  - `RLIMIT_AS` : the maximum size of the process's virtual memory (address space) in bytes.
@@ -41,7 +41,7 @@
 #' @export
 #' @param cur set the current (soft) limit for this resource. See details.
 #' @param max set the max (hard) limit for this resource. See details.
-#' @references [GETRLIMIT(2)](http://man7.org/linux/man-pages/man2/setrlimit.2.html)
+#' @references [GETRLIMIT(2)](https://man7.org/linux/man-pages/man2/setrlimit.2.html)
 #' @examples # Print all limits
 #' rlimit_all()
 #' 

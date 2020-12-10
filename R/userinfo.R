@@ -7,8 +7,8 @@
 #' @name userinfo
 #' @param uid user ID (integer) or name (string)
 #' @useDynLib unix R_user_info
-#' @references [GETPWNAM(3)](http://man7.org/linux/man-pages/man3/getpwnam.3.html)
-#' [GETGRNAM(3)](http://man7.org/linux/man-pages/man3/getgrnam.3.html)
+#' @references [GETPWNAM(3)](https://man7.org/linux/man-pages/man3/getpwnam.3.html)
+#' [GETGRNAM(3)](https://man7.org/linux/man-pages/man3/getgrnam.3.html)
 #' @examples # Get info current user
 #' user_info()
 #' group_info()

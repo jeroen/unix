@@ -12,7 +12,6 @@
 #'
 #' @export
 #' @rdname eval_fork
-#' @inheritParams exec
 #' @importFrom grDevices pdf graphics.off
 #' @param expr expression to evaluate
 #' @param tmp the value of [tempdir()] inside the forked process

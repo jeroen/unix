@@ -19,10 +19,10 @@
 #' @export
 #' @rdname process
 #' @useDynLib unix R_getuid
-#' @references [GETUID(2)](http://man7.org/linux/man-pages/man2/getuid.2.html)
-#' [GETPID(2)](http://man7.org/linux/man-pages/man2/getpid.2.html)
-#' [GETPGID(2)](http://man7.org/linux/man-pages/man2/getpgid.2.html)
-#' [GETPRIORITY(2)](http://man7.org/linux/man-pages/man2/getpriority.2.html)
+#' @references [GETUID(2)](https://man7.org/linux/man-pages/man2/getuid.2.html)
+#' [GETPID(2)](https://man7.org/linux/man-pages/man2/getpid.2.html)
+#' [GETPGID(2)](https://man7.org/linux/man-pages/man2/getpgid.2.html)
+#' [GETPRIORITY(2)](https://man7.org/linux/man-pages/man2/getpriority.2.html)
 #' @examples # Current User:
 #' getuid()
 getuid <- function(){

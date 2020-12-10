@@ -24,6 +24,6 @@ user_info()
 group_info()
 }
 \references{
-\href{http://man7.org/linux/man-pages/man3/getpwnam.3.html}{GETPWNAM(3)}
-\href{http://man7.org/linux/man-pages/man3/getgrnam.3.html}{GETGRNAM(3)}
+\href{https://man7.org/linux/man-pages/man3/getpwnam.3.html}{GETPWNAM(3)}
+\href{https://man7.org/linux/man-pages/man3/getgrnam.3.html}{GETGRNAM(3)}
 }

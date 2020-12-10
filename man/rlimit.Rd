@@ -51,7 +51,7 @@ ceiling for the soft limit: an unprivileged process may set only its soft limit 
 a value in the range from 0 up to the hard limit, and (irreversibly) lower its hard
 limit.
 
-Definitons from the \href{http://man7.org/linux/man-pages/man2/setrlimit.2.html}{Linux manual page}
+Definitons from the \href{https://man7.org/linux/man-pages/man2/setrlimit.2.html}{Linux manual page}
 are as follows:
 \itemize{
 \item \code{RLIMIT_AS} : the maximum size of the process's virtual memory (address space) in bytes.
@@ -95,5 +95,5 @@ rlimit_as(max = 1e10)
 }
 }
 \references{
-\href{http://man7.org/linux/man-pages/man2/setrlimit.2.html}{GETRLIMIT(2)}
+\href{https://man7.org/linux/man-pages/man2/setrlimit.2.html}{GETRLIMIT(2)}
 }

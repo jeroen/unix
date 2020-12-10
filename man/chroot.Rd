@@ -21,5 +21,5 @@ for any kind of security purpose, neither to fully sandbox a process
 nor to restrict filesystem system calls.
 }
 \references{
-\href{http://man7.org/linux/man-pages/man2/chroot.2.html}{CHROOT(2)}
+\href{https://man7.org/linux/man-pages/man2/chroot.2.html}{CHROOT(2)}
 }
