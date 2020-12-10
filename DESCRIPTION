@@ -9,7 +9,7 @@ License: MIT + file LICENSE
 URL: https://github.com/jeroen/unix
 BugReports: https://github.com/jeroen/unix/issues
 OS_type: unix
-SystemRequirements: POSIX.1-2001
+SystemRequirements: POSIX.1-2001, AppArmor (optional)
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
