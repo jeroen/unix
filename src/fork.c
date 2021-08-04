@@ -12,6 +12,7 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 
 #ifdef __linux__
 #include <sys/prctl.h>
