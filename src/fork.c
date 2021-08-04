@@ -240,8 +240,10 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
 
     //Linux only: try to kill proccess group when parent dies
 #ifdef PR_SET_PDEATHSIG
-    prctl(PR_SET_PDEATHSIG, SIGTERM);
-    signal(SIGTERM, kill_process_group);
+    if(getenv("KILL_RUNAWAY_FORKS")){
+      prctl(PR_SET_PDEATHSIG, SIGTERM);
+      signal(SIGTERM, kill_process_group);      
+    }
 #endif
 
     //this is the hacky stuff
