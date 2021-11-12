@@ -147,9 +147,7 @@ test_that("scope environment is correct", {
 
 test_that("rlimits apply in eval_safe", {
   if(rlimit_cpu()$max > 100)
-    expect_equal(eval_safe(rlimit_cpu()$max, rlimits = c(cpu = 100, data = 1e7)), 100)
-  if(rlimit_data()$max > 1e7)
-    expect_equal(eval_safe(rlimit_data()$max, rlimits = c(cpu = 100, data = 1e7)), 1e7)
+    expect_equal(eval_safe(rlimit_cpu()$max, rlimits = c(cpu = 100)), 100)
 
   # unsupported rlimit
   expect_error(eval_safe(123, rlimits = c(foo = 123)), "foo")
