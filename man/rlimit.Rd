@@ -82,6 +82,7 @@ rlimit_all()
 # Get one limit
 rlimit_as()
 
+\dontrun{
 # Set a soft limit
 lim <- rlimit_as(1e9)
 print(lim)
@@ -89,7 +90,6 @@ print(lim)
 # Reset the limit to max
 rlimit_as(cur = lim$max)
 
-\dontrun{
 # Set a hard limit (irreversible)
 rlimit_as(max = 1e10)
 }

@@ -1,5 +1,6 @@
 1.5.4
-  - Remove unit test for rlimit_data() which does not work anymore on MacOS 12
+  - Remove examples and test for rlimit_as() and rlimit_data() which give an
+    error on MacOS 12.
 
 1.5.3
   _ On linux, eval_fork() no longer tries to kill orphan forks
