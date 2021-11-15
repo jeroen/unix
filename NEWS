@@ -1,6 +1,6 @@
 1.5.4
   - Remove examples and test for rlimit_as() and rlimit_data() which give an
-    error on MacOS 12.
+    error on MacOS 12 if the value is too low.
 
 1.5.3
   _ On linux, eval_fork() no longer tries to kill orphan forks
