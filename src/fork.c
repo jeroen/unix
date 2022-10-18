@@ -97,7 +97,7 @@ static void check_interrupt_fn(void *dummy) {
   R_CheckUserInterrupt();
 }
 
-static int pending_interrupt() {
+static int pending_interrupt(void) {
   return !(R_ToplevelExec(check_interrupt_fn, NULL));
 }
 
@@ -184,7 +184,7 @@ int Fake_ReadConsole(const char * a, unsigned char * b, int c, int d){
   return 0;
 }
 
-void My_R_Flush(){
+void My_R_Flush(void){
 
 }
 

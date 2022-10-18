@@ -1,3 +1,6 @@
+1.5.5
+  - Fix strict-prototypes warnings
+  
 1.5.4
   - Remove examples and test for rlimit_as() and rlimit_data() which give an
     error on MacOS 12 if the value is too low.

@@ -45,7 +45,7 @@ static int rlimit_types[9] = {
   RLIMIT_STACK, //8
 };
 
-SEXP R_safe_build(){
+SEXP R_safe_build(void){
 #ifdef SYS_BUILD_SAFE
   return ScalarLogical(TRUE);
 #else
@@ -53,7 +53,7 @@ SEXP R_safe_build(){
 #endif
 }
 
-SEXP R_have_apparmor(){
+SEXP R_have_apparmor(void){
 #ifdef HAVE_APPARMOR
   return ScalarLogical(TRUE);
 #else
@@ -110,7 +110,7 @@ SEXP R_aa_change_profile(SEXP profile){
   return R_NilValue;
 }
 
-SEXP R_aa_is_enabled(){
+SEXP R_aa_is_enabled(void){
 #ifndef HAVE_APPARMOR
   return R_NilValue;
 #else
@@ -118,7 +118,7 @@ SEXP R_aa_is_enabled(){
 #endif //HAVE_APPARMOR
 }
 
-SEXP R_aa_getcon(){
+SEXP R_aa_getcon(void){
 #ifndef HAVE_APPARMOR
   return R_NilValue;
 #else

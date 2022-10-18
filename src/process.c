@@ -14,7 +14,7 @@ SEXP R_kill(SEXP pid, SEXP sig){
   return R_NilValue;
 }
 
-SEXP R_getuid(){
+SEXP R_getuid(void){
   return Rf_ScalarInteger(getuid());
 }
 
@@ -23,7 +23,7 @@ SEXP R_setuid(SEXP id){
   return R_getuid();
 }
 
-SEXP R_geteuid(){
+SEXP R_geteuid(void){
   return Rf_ScalarInteger(geteuid());
 }
 
@@ -32,7 +32,7 @@ SEXP R_seteuid(SEXP id){
   return R_geteuid();
 }
 
-SEXP R_getgid () {
+SEXP R_getgid (void) {
   return Rf_ScalarInteger(getgid());
 }
 
@@ -41,7 +41,7 @@ SEXP R_setgid(SEXP id){
   return R_getgid();
 }
 
-SEXP R_getegid () {
+SEXP R_getegid (void) {
   return Rf_ScalarInteger(getegid());
 }
 
@@ -50,15 +50,15 @@ SEXP R_setegid(SEXP id){
   return R_getegid();
 }
 
-SEXP R_getpid () {
+SEXP R_getpid (void) {
   return Rf_ScalarInteger(getpid());
 }
 
-SEXP R_getppid () {
+SEXP R_getppid (void) {
   return Rf_ScalarInteger(getppid());
 }
 
-SEXP R_getpgid () {
+SEXP R_getpgid (void) {
   return Rf_ScalarInteger(getpgid(0));
 }
 
@@ -67,7 +67,7 @@ SEXP R_setpgid(SEXP pid){
   return R_getpgid();
 }
 
-SEXP R_getpriority () {
+SEXP R_getpriority (void) {
   return Rf_ScalarInteger(getpriority(PRIO_PROCESS, 0));
 }
 

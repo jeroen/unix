@@ -49,7 +49,7 @@ SEXP R_rlimit_stack(SEXP a, SEXP b) {return R_rlimit(RLIMIT_STACK, a, b);}
 
 /* these are not available on Solaris 10 */
 
-SEXP make_navec(){
+SEXP make_navec(void){
   SEXP out = Rf_allocVector(REALSXP, 2);
   REAL(out)[0] = NA_REAL;
   REAL(out)[1] = NA_REAL;
