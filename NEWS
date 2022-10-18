@@ -6,7 +6,7 @@
     error on MacOS 12 if the value is too low.
 
 1.5.3
-  _ On linux, eval_fork() no longer tries to kill orphan forks
+  - On linux, eval_fork() no longer tries to kill orphan forks
   
 1.5.2
   - Add 'AppArmor' in SystemRequirements to help rstudio/r-system-requirements
