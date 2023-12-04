@@ -340,7 +340,7 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
     } else if(killcount) {
       Rf_errorcall(call, "process interrupted by parent");
     } else if(isString(res) && Rf_length(res) && Rf_length(STRING_ELT(res, 0)) > 8){
-      Rf_errorcall(R_NilValue, CHAR(STRING_ELT(res, 0)));
+      Rf_errorcall(R_NilValue, "%s", CHAR(STRING_ELT(res, 0)));
     }
     Rf_errorcall(call, "child process has died");
   }

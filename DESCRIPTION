@@ -1,12 +1,12 @@
 Package: unix
 Title: POSIX System Utilities
-Version: 1.5.5
+Version: 1.5.6
 Authors@R: person("Jeroen", "Ooms", email = "jeroen@berkeley.edu", 
     comment = c(ORCID = "0000-0002-4035-0289"), role = c("aut", "cre"))
 Description: Bindings to system utilities found in most Unix systems such as
     POSIX functions which are not part of the Standard C Library.
 License: MIT + file LICENSE
-URL: https://github.com/jeroen/unix
+URL: https://jeroen.r-universe.dev/unix
 BugReports: https://github.com/jeroen/unix/issues
 OS_type: unix
 SystemRequirements: POSIX.1-2001, AppArmor (optional)
