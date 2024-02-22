@@ -72,18 +72,6 @@ aa_change_profile <- function(profile){
   .Call(R_aa_change_profile, profile)
 }
 
-#' @useDynLib unix R_setuid
-setuid <- function(uid){
-  stopifnot(is.numeric(uid))
-  .Call(R_setuid, as.integer(uid))
-}
-
-#' @useDynLib unix R_setgid
-setgid <- function(gid){
-  stopifnot(is.numeric(gid))
-  .Call(R_setgid, as.integer(gid))
-}
-
 #' @useDynLib unix R_set_rlimits
 set_rlimits <- function(rlimits){
   rlimits <- do.call(parse_limits, as.list(rlimits))

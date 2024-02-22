@@ -101,7 +101,8 @@ getpriority <- function(){
 #' @useDynLib unix R_setuid
 #' @param uid User ID from `/etc/passwd`.
 setuid <- function(uid){
-  .Call(R_setuid, uid)
+  stopifnot(is.numeric(uid))
+  .Call(R_setuid, as.integer(uid))
 }
 
 #' @export
@@ -116,7 +117,8 @@ seteuid <- function(uid){
 #' @useDynLib unix R_setgid
 #' @param gid Group ID from `/etc/group`.
 setgid <- function(gid){
-  .Call(R_setgid, gid)
+  stopifnot(is.numeric(gid))
+  .Call(R_setgid, as.integer(gid))
 }
 
 #' @export
