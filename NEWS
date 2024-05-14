@@ -1,3 +1,6 @@
+1.5.8
+  - Condition another api call
+
 1.5.7
   - Remove duplicate functions definitions for setuid and setgid()
   

@@ -265,7 +265,10 @@ SEXP R_eval_fork(SEXP call, SEXP env, SEXP subtmp, SEXP timeout, SEXP outfun, SE
       } else if(fail == 0 && object){
         serialize_to_pipe(object, results);
       } else {
-        const char * errbuf = R_curErrorBuf();
+        const char * errbuf = NULL;
+#ifdef SYS_BUILD_SAFE
+        errbuf = R_curErrorBuf();
+#endif
         serialize_to_pipe(mkString(errbuf ? errbuf : "unknown error in child"), results);
       }
     }
