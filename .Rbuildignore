@@ -8,3 +8,5 @@
 ^src/Makevars$
 ^readme.md$
 ^\.github$
+^\.positai$
+^\.claude$

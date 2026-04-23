@@ -51,7 +51,7 @@ test_that("eval_fork gives errors", {
   # Test that tryCatch works
   expect_equal(eval_fork(try(pi, silent = TRUE)), pi)
   expect_is(eval_fork(try(blabla(), silent = TRUE)), "try-error")
-  expect_is(eval_fork(tryCatch(blabla(), error = identity)), "simpleError")
+  expect_is(eval_fork(tryCatch(blabla(), error = identity)), "error")
 })
 
 test_that("Fork does not clean tmpdir", {
